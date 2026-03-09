@@ -6,6 +6,7 @@
 <title>Gran Canaria Ultra Coach</title>
 
 <style>
+
 body{
 font-family:Arial;
 background:#0f172a;
@@ -13,41 +14,31 @@ color:white;
 padding:20px;
 }
 
-.container{
-max-width:600px;
-margin:auto;
-}
-
 .card{
 background:#1e293b;
 padding:20px;
-border-radius:15px;
+border-radius:14px;
 margin-bottom:20px;
 }
 
-input{
+input,select,button{
 width:100%;
 padding:10px;
-margin:5px 0;
-border-radius:10px;
+margin-top:8px;
+margin-bottom:12px;
+border-radius:8px;
 border:none;
 }
 
 button{
 background:#22c55e;
-border:none;
-padding:15px;
-border-radius:12px;
 font-weight:bold;
-width:100%;
-cursor:pointer;
+color:black;
 }
 
 .result{
-margin-top:20px;
-padding:15px;
-background:#020617;
-border-radius:12px;
+font-size:18px;
+margin-top:10px;
 }
 
 </style>
@@ -55,61 +46,86 @@ border-radius:12px;
 
 <body>
 
-<div class="container">
-
-<h2>Gran Canaria Ultra Coach</h2>
+<h1>Gran Canaria Ultra Coach</h1>
 
 <div class="card">
 
 <h3>Datos de la mañana</h3>
 
-<label>Peso</label>
+Peso
 <input id="peso" type="number">
 
-<label>% grasa</label>
+% grasa
 <input id="grasa" type="number">
 
-<label>% músculo</label>
+% músculo
 <input id="musculo" type="number">
 
-<label>Cintura</label>
+Cintura
 <input id="cintura" type="number">
 
-</div>
+Entreno hoy
+<select id="entreno">
+<option>No</option>
+<option>Si</option>
+</select>
 
-<div class="card">
-
-<button onclick="calcular()">Generar protocolo automático del día</button>
-
-<div class="result" id="resultado"></div>
-
-</div>
+<button onclick="generar()">Generar estrategia</button>
 
 </div>
+
+<div class="card result" id="resultado"></div>
 
 <script>
 
-function calcular(){
+function generar(){
 
-let peso = parseFloat(document.getElementById("peso").value);
+let peso=parseFloat(document.getElementById("peso").value)
+let grasa=parseFloat(document.getElementById("grasa").value)
+let entreno=document.getElementById("entreno").value
 
-let proteina = (peso*2.3).toFixed(0);
-let grasa = (peso*0.6).toFixed(0);
-let calorias = (peso*28).toFixed(0);
+let prote=peso*2.3
+let grasaMacro=peso*0.6
+let carbs=0
+let estrategia=""
 
-let resultado = `
-<h3>Protocolo del día</h3>
+if(grasa>18){
+estrategia="Definición agresiva"
+carbs=80
+}
 
-Proteína objetivo: ${proteina} g<br>
-Grasas: ${grasa} g<br>
-Calorías estimadas: ${calorias}
+if(grasa<18){
+estrategia="Definición"
+carbs=120
+}
 
-<br><br>
+if(entreno=="Si"){
+carbs+=40
+}
 
-Estrategia recomendada: Definición
-`;
+document.getElementById("resultado").innerHTML=
 
-document.getElementById("resultado").innerHTML = resultado;
+"Fecha: "+new Date().toLocaleDateString()+"<br><br>"+
+
+"Estrategia: "+estrategia+"<br><br>"+
+
+"Proteína: "+prote.toFixed(0)+" g<br>"+
+
+"Grasas: "+grasaMacro.toFixed(0)+" g<br>"+
+
+"Hidratos: "+carbs+" g<br><br>"+
+
+"Menú ejemplo:<br><br>"+
+
+"Comida:<br>"+
+"Pavo 150 g<br>"+
+"Tortitas arroz 40 g<br>"+
+"Frutos rojos 80 g<br><br>"+
+
+"Cena:<br>"+
+"Salmón 180 g<br>"+
+"Patata 220 g<br>"+
+"Verduras 200 g<br>"
 
 }
 
