@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#22c55e">
+<title>Gran Canaria Ultra Coach</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{
+  --bg:#08101f; --bg2:#0d1830; --card:#111d35; --card2:#172847; --line:#29415f;
+  --text:#f8fafc; --muted:#bfd0e4; --green:#22c55e; --green2:#16a34a; --cyan:#38bdf8;
+  --blue:#2563eb; --amber:#f59e0b; --red:#ef4444; --violet:#8b5cf6; --pink:#ec4899;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;color:var(--text);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(56,189,248,.18), transparent 18%),
+    radial-gradient(circle at 100% 0%, rgba(34,197,94,.12), transparent 16%),
+    radial-gradient(circle at 50% 100%, rgba(139,92,246,.10), transparent 20%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+}
+.wrap{max-width:1280px;margin:0 auto;padding:16px}
+.hero{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.16), transparent 22%),
+    linear-gradient(135deg,#0ea5e9 0%, #2563eb 30%, #8b5cf6 65%, #22c55e 100%);
+  border-radius:28px;padding:24px;margin-bottom:16px;box-shadow:0 22px 52px rgba(0,0,0,.28)
+}
+.hero h1{margin:0 0 8px 0;font-size:34px}
+.hero p{margin:0;color:#eef8ff;line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.row2{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+@media(max-width:980px){.grid,.grid3,.row2{grid-template-columns:1fr}}
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);
+  border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 12px 28px rgba(0,0,0,.18)
+}
+h2,h3{margin:0 0 10px 0}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input,select{
+  width:100%;padding:11px 12px;border-radius:12px;border:1px solid #314a68;
+  background:#0a1527;color:var(--text)
+}
+button{
+  padding:12px 14px;border:0;border-radius:12px;font-weight:700;cursor:pointer;
+  background:linear-gradient(90deg,var(--green),var(--green2));color:#03130a;margin-top:12px
+}
+.secondary{background:linear-gradient(90deg,var(--cyan),var(--blue));color:#fff}
+.ghost{background:#0b1627;color:#d9ecff;border:1px solid #2c4666}
+.kpi{
+  padding:16px;background:linear-gradient(180deg,#081320,#0d1b2f);border:1px solid var(--line);border-radius:18px
+}
+.kpi .v{font-size:28px;font-weight:800}
+.muted{color:var(--muted)} .small{font-size:13px}
+.badge{
+  display:inline-block;padding:6px 10px;border-radius:999px;background:#091425;
+  border:1px solid var(--line);margin-right:8px;margin-bottom:8px
+}
+.note{border-left:4px solid var(--cyan);padding-left:12px;color:var(--muted);line-height:1.48}
+.meal{background:#091425;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.meal h4{margin:0 0 8px 0}
+.food{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed #29415f}
+.food:last-child{border-bottom:0}
+.food .meta{color:var(--muted);font-size:13px}
+.summary{background:#0a1526;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:10px}
+.warn{color:var(--amber);font-size:13px}
+.checkrow{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px dashed #29415f}
+.checkrow:last-child{border-bottom:0}
+.checkrow input{width:auto;transform:scale(1.2);margin-top:4px}
+.barwrap{background:#15253f;border-radius:999px;overflow:hidden;border:1px solid #2d4564}
+.barfill{height:22px;background:linear-gradient(90deg,#ef4444,#f59e0b,#22c55e)}
+.ring{
+  width:220px;height:220px;border-radius:50%;margin:0 auto 10px auto;
+  background:conic-gradient(#38bdf8 0deg,#38bdf8 0deg,#1b2b42 0deg 360deg);
+  display:grid;place-items:center
+}
+.ring-inner{
+  width:150px;height:150px;border-radius:50%;background:#091425;
+  display:grid;place-items:center;text-align:center;padding:10px
+}
+.legend{display:flex;gap:10px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:99px;display:inline-block}
+.histbox{height:220px;background:#091425;border:1px solid var(--line);border-radius:16px;padding:8px}
+svg{width:100%;height:100%}
+.subtle{opacity:.9}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>Gran Canaria Ultra Coach</h1>
+    <p>Motor automático de definición. Metes peso, grasa, músculo y cintura; la app guarda histórico, decide estrategia diaria, calcula macros exactos, reparte alimentos, explica el timing de hidratos y te lleva hacia tu objetivo de six-pack sin que tengas que pensar.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Datos de la mañana</h3>
+      <label>Peso (kg)</label><input id="peso" type="number" step="0.1">
+      <label>% grasa</label><input id="grasa" type="number" step="0.1">
+      <label>% músculo</label><input id="musculo" type="number" step="0.1">
+      <label>Cintura (cm)</label><input id="cintura" type="number" step="0.1">
+    </div>
+    <div class="card">
+      <h3>Ajustes del día</h3>
+      <label>¿Hoy toca gimnasio?</label><select id="gymday"><option value="no">No</option><option value="si">Sí</option></select>
+      <label>Modo antiinflamación</label><select id="anti"><option value="no">No</option><option value="si">Sí</option></select>
+      <label>Evento social hoy</label><select id="social"><option value="no">No</option><option value="si">Sí</option></select>
+      <button onclick="generarPlan()">Generar protocolo automático del día</button>
+      <div id="warning" class="warn"></div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="kpi"><div class="muted">Proteína objetivo</div><div class="v" id="kpiP">-</div></div>
+    <div class="kpi"><div class="muted">Hidratos objetivo</div><div class="v" id="kpiC">-</div></div>
+    <div class="kpi"><div class="muted">Grasas objetivo</div><div class="v" id="kpiF">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Resumen de macros</h3>
+      <div id="macroText" class="muted" style="margin-bottom:10px"></div>
+      <div class="ring" id="macroRing"><div class="ring-inner"><div><div class="small muted">Macros</div><div id="macroCenter" style="font-size:22px;font-weight:800">-</div></div></div></div>
+      <div class="legend">
+        <span><i class="dot" style="background:#38bdf8"></i>Proteína</span>
+        <span><i class="dot" style="background:#f59e0b"></i>Hidratos</span>
+        <span><i class="dot" style="background:#22c55e"></i>Grasas</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Estrategia del día</h3>
+      <div id="strategy"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Objetivo six-pack</h3>
+      <div id="targetBox" class="muted"></div>
+      <div class="barwrap" style="margin-top:10px"><div id="sixPackFill" class="barfill" style="width:0%"></div></div>
+      <div id="sixPackText" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h3>Evolución y tendencia</h3>
+      <div id="trendBox" class="muted"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Menú exacto del día</h3>
+    <div id="menu"></div>
+  </div>
+
+  <div class="row2">
+    <div>
+      <div class="card">
+        <h3>Suplementación y checklist</h3>
+        <div id="supplements"></div>
+      </div>
+      <div class="card">
+        <h3>Hidratación recomendada</h3>
+        <div id="water"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>Añadir alimento personalizado</h3>
+        <label>Nombre</label><input id="foodName" type="text">
+        <label>Proteína /100 g</label><input id="foodP" type="number" step="0.1">
+        <label>Hidratos /100 g</label><input id="foodC" type="number" step="0.1">
+        <label>Grasas /100 g</label><input id="foodF" type="number" step="0.1">
+        <label>Categoría</label>
+        <select id="foodCat">
+          <option value="simple_carbs">Hidrato día</option>
+          <option value="dinner_carbs">Hidrato noche</option>
+          <option value="simple_proteins">Proteína simple</option>
+          <option value="dinner_proteins">Proteína cena</option>
+          <option value="fats">Grasa</option>
+          <option value="vegs">Verdura</option>
+          <option value="night_extras">Extra noche</option>
+        </select>
+        <button class="secondary" onclick="addCustomFood()">Guardar alimento</button>
+        <div class="muted small" style="margin-top:8px">Escaneo de alimentos: puedes hacer foto a la etiqueta y copiar aquí sus macros por 100 g. El alimento queda guardado para siempre.</div>
+      </div>
+
+      <div class="card">
+        <h3>Calculadora de equivalencias</h3>
+        <label>Alimento origen</label><select id="eqFrom"></select>
+        <label>Gramos origen</label><input id="eqGrams" type="number" step="1" value="100">
+        <label>Igualar por</label><select id="eqMacro"><option value="p">Proteína</option><option value="c">Hidratos</option><option value="f">Grasas</option></select>
+        <label>Alimento destino</label><select id="eqTo"></select>
+        <button class="ghost" onclick="calcEq()">Calcular equivalencia</button>
+        <div id="eqOut" class="summary"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3>Evolución de peso</h3><div class="histbox"><svg id="weightSvg" viewBox="0 0 100 100"></svg></div></div>
+    <div class="card"><h3>Evolución de cintura</h3><div class="histbox"><svg id="waistSvg" viewBox="0 0 100 100"></svg></div></div>
+  </div>
+</div>
+
+<script>
+const USER = {height: 187, age: 42, gymDays: 3};
+const BASE_FOODS = {"simple_proteins": [{"name": "Pavo Carloteña", "p": 21.0, "c": 1.0, "f": 1.0}, {"name": "Queso fresco batido 0%", "p": 10.0, "c": 3.3, "f": 0.2}, {"name": "Yogur griego", "p": 10.0, "c": 4.0, "f": 5.0}, {"name": "Salmón ahumado", "p": 20.0, "c": 0.0, "f": 8.0}, {"name": "Bonito en aceite oliva", "p": 24.0, "c": 0.0, "f": 8.0}], "simple_carbs": [{"name": "Tortitas arroz", "p": 7.0, "c": 81.0, "f": 3.0}, {"name": "Bagel", "p": 9.0, "c": 48.0, "f": 1.0}, {"name": "Pan integral Mercadona", "p": 10.0, "c": 43.0, "f": 4.0}, {"name": "Manzana", "p": 0.3, "c": 14.0, "f": 0.2}, {"name": "Fresas", "p": 0.8, "c": 8.0, "f": 0.3}, {"name": "Frutos rojos", "p": 1.0, "c": 12.0, "f": 0.3}, {"name": "Piña", "p": 0.5, "c": 13.0, "f": 0.1}], "dinner_proteins": [{"name": "Pechuga pollo airfryer", "p": 23.0, "c": 0.0, "f": 2.0}, {"name": "Salmón airfryer", "p": 22.0, "c": 0.0, "f": 12.0}, {"name": "Merluza congelada", "p": 20.0, "c": 0.0, "f": 2.0}, {"name": "Bonito en aceite oliva", "p": 24.0, "c": 0.0, "f": 8.0}, {"name": "Hamburguesa 98% carne", "p": 22.0, "c": 0.0, "f": 10.0}, {"name": "Huevos", "p": 13.0, "c": 1.0, "f": 11.0}, {"name": "Gamba blanca", "p": 20.0, "c": 1.0, "f": 1.0}, {"name": "Solomillo", "p": 22.0, "c": 0.0, "f": 8.0}], "dinner_carbs": [{"name": "Patata cocida", "p": 2.0, "c": 17.0, "f": 0.0}, {"name": "Ñoquis", "p": 4.0, "c": 28.0, "f": 1.0}, {"name": "Bagel", "p": 9.0, "c": 48.0, "f": 1.0}, {"name": "Macarrones proteicos", "p": 8.8, "c": 56.0, "f": 2.3}], "vegs": [{"name": "Verduras airfryer", "p": 2.0, "c": 6.0, "f": 0.5}, {"name": "Pimientos", "p": 1.0, "c": 6.0, "f": 0.2}, {"name": "Endivias", "p": 1.2, "c": 3.5, "f": 0.2}], "fats": [{"name": "Aguacate", "p": 2.0, "c": 9.0, "f": 15.0}, {"name": "Nueces", "p": 15.0, "c": 14.0, "f": 65.0}], "night_extras": [{"name": "Queso fresco batido 0%", "p": 10.0, "c": 3.3, "f": 0.2}, {"name": "Yogur griego", "p": 10.0, "c": 4.0, "f": 5.0}, {"name": "Frutos rojos", "p": 1.0, "c": 12.0, "f": 0.3}]};
+const SUPPS = [{"name": "VM-2000", "dose": "mañana", "purpose": "multivitamínico base"}, {"name": "Omega-3", "dose": "cena", "purpose": "antiinflamación"}, {"name": "Vitamina D3", "dose": "mañana", "purpose": "hormonal / inmune"}, {"name": "Zinc", "dose": "noche", "purpose": "cabello / recuperación"}, {"name": "Biotina", "dose": "mañana", "purpose": "cabello"}, {"name": "Magnesio", "dose": "noche", "purpose": "sueño / sistema nervioso"}];
+let FOODS = JSON.parse(localStorage.getItem('gc_ultra_foods') || 'null') || BASE_FOODS;
+let weights = JSON.parse(localStorage.getItem('gc_ultra_weights') || '[]');
+let waists = JSON.parse(localStorage.getItem('gc_ultra_waists') || '[]');
+
+function round5(x){ return Math.max(0, Math.round(x/5)*5); }
+function pick(arr, idx){ return arr[idx % arr.length]; }
+function m(food, grams){ return {p: food.p*grams/100, c: food.c*grams/100, f: food.f*grams/100}; }
+function fitItem(food, target, macroKey, minG, maxG){
+  const density = food[macroKey];
+  if(density <= 0) return 0;
+  let grams = (target / density) * 100;
+  grams = Math.min(maxG, Math.max(minG, grams));
+  return round5(grams);
+}
+function allFoods(){ return [].concat(FOODS.simple_proteins,FOODS.simple_carbs,FOODS.dinner_proteins,FOODS.dinner_carbs,FOODS.fats,FOODS.vegs,FOODS.night_extras); }
+function saveFoods(){ localStorage.setItem('gc_ultra_foods', JSON.stringify(FOODS)); renderEqOptions(); }
+function drawHistory(svgId, values, color){
+  const svg = document.getElementById(svgId);
+  if(!values.length){ svg.innerHTML = '<text x="50" y="55" text-anchor="middle" fill="#b8c7da" font-size="8">Sin registros</text>'; return; }
+  const min = Math.min.apply(null, values), max = Math.max.apply(null, values), span = max-min || 1;
+  const pts = values.map(function(v,i){
+    const x = values.length===1 ? 50 : (i/(values.length-1))*92+4;
+    const y = 92 - ((v-min)/span)*80;
+    return x + ',' + y;
+  }).join(' ');
+  svg.innerHTML =
+    '<polyline fill="none" stroke="'+color+'" stroke-width="2.5" points="'+pts+'" />' +
+    '<line x1="4" y1="92" x2="96" y2="92" stroke="#29415f" stroke-width="0.8"/>' +
+    '<text x="4" y="8" fill="#b8c7da" font-size="7">max '+max.toFixed(1)+'</text>' +
+    '<text x="4" y="98" fill="#b8c7da" font-size="7">min '+min.toFixed(1)+'</text>';
+}
+function renderSupplements(){
+  let html = '';
+  SUPPS.forEach(function(s, i){
+    const key = 'supp_ultra_' + i;
+    const checked = localStorage.getItem(key) === '1' ? 'checked' : '';
+    html += '<div class="checkrow"><input type="checkbox" id="'+key+'" '+checked+' onchange="toggleCheck(\\''+key+'\\')"><div><b>'+s.name+'</b><br><span class="muted">'+s.dose+' · '+s.purpose+'</span></div></div>';
+  });
+  ['agua','cabello'].forEach(function(k){
+    const checked = localStorage.getItem('chk_'+k) === '1' ? 'checked' : '';
+    const label = k==='agua' ? 'Agua completada' : 'Protocolo cabello completado';
+    const desc = k==='agua' ? 'Marca cuando llegues al objetivo de litros.' : 'Biotina + zinc + D3 + omega-3 + base micronutrientes.';
+    html += '<div class="checkrow"><input type="checkbox" id="chk_'+k+'" '+checked+' onchange="toggleCheck(\\'chk_'+k+'\\')"><div><b>'+label+'</b><br><span class="muted">'+desc+'</span></div></div>';
+  });
+  html += '<div class="summary"><b>Protocolos automáticos</b><br>La app recuerda suplementos, agua y rutina de cabello. Si notas caída mantenida, lo correcto es analítica y valoración médica.</div>';
+  document.getElementById('supplements').innerHTML = html;
+}
+window.toggleCheck = function(key){ const el = document.getElementById(key); localStorage.setItem(key, el.checked ? '1' : '0'); }
+function renderHistory(){ drawHistory('weightSvg', weights, '#38bdf8'); drawHistory('waistSvg', waists, '#22c55e'); }
+function macroRing(p,c,f){
+  const total = p+c+f || 1, pdeg=(p/total)*360, cdeg=(c/total)*360;
+  const ring = document.getElementById('macroRing');
+  ring.style.background = 'conic-gradient(#38bdf8 0deg '+pdeg+'deg, #f59e0b '+pdeg+'deg '+(pdeg+cdeg)+'deg, #22c55e '+(pdeg+cdeg)+'deg 360deg)';
+  document.getElementById('macroCenter').innerText = Math.round(total) + ' g';
+}
+window.addCustomFood = function(){
+  const name = document.getElementById('foodName').value.trim();
+  const p = parseFloat(document.getElementById('foodP').value);
+  const c = parseFloat(document.getElementById('foodC').value);
+  const f = parseFloat(document.getElementById('foodF').value);
+  const cat = document.getElementById('foodCat').value;
+  if(!name || isNaN(p) || isNaN(c) || isNaN(f)){ alert('Rellena nombre y macros.'); return; }
+  FOODS[cat].push({name:name, p:p, c:c, f:f});
+  saveFoods();
+  document.getElementById('foodName').value = '';
+  document.getElementById('foodP').value = '';
+  document.getElementById('foodC').value = '';
+  document.getElementById('foodF').value = '';
+  alert('Alimento guardado.');
+}
+function renderEqOptions(){
+  const foods = allFoods();
+  const opts = foods.map((x,i)=>'<option value="'+i+'">'+x.name+'</option>').join('');
+  document.getElementById('eqFrom').innerHTML = opts;
+  document.getElementById('eqTo').innerHTML = opts;
+}
+window.calcEq = function(){
+  const foods = allFoods();
+  const from = foods[parseInt(document.getElementById('eqFrom').value)];
+  const to = foods[parseInt(document.getElementById('eqTo').value)];
+  const grams = parseFloat(document.getElementById('eqGrams').value || '0');
+  const macro = document.getElementById('eqMacro').value;
+  if(!from || !to || !grams){ return; }
+  const target = from[macro] * grams / 100;
+  const toGrams = to[macro] > 0 ? (target / to[macro]) * 100 : 0;
+  const macroName = macro==='p' ? 'proteína' : macro==='c' ? 'hidratos' : 'grasas';
+  document.getElementById('eqOut').innerHTML =
+    '<b>'+grams+' g de '+from.name+'</b><br>' +
+    'aportan <b>'+target.toFixed(1)+' g</b> de '+macroName+'.<br><br>' +
+    'Equivalen a <b>'+toGrams.toFixed(0)+' g</b> de <b>'+to.name+'</b> para igualar ese macro.';
+}
+window.generarPlan = function(){
+  const peso = parseFloat(document.getElementById('peso').value);
+  const grasa = parseFloat(document.getElementById('grasa').value);
+  const musculo = parseFloat(document.getElementById('musculo').value || 0);
+  const cintura = parseFloat(document.getElementById('cintura').value || 0);
+  const gymday = document.getElementById('gymday').value;
+  const anti = document.getElementById('anti').value;
+  const social = document.getElementById('social').value;
+
+  if(isNaN(peso) || isNaN(grasa) || isNaN(cintura)){
+    document.getElementById('warning').innerText = 'Introduce peso, % grasa y cintura.';
+    return;
+  }
+  document.getElementById('warning').innerText = '';
+
+  weights.push(peso);
+  waists.push(cintura);
+  localStorage.setItem('gc_ultra_weights', JSON.stringify(weights));
+  localStorage.setItem('gc_ultra_waists', JSON.stringify(waists));
+
+  const leanMass = peso * (1 - grasa/100);
+  const targetWeight11 = leanMass / (1 - 0.11);
+  const targetWeight12 = leanMass / (1 - 0.12);
+
+  let proteinRatio = grasa > 20 ? 2.4 : (grasa > 14 ? 2.3 : 2.2);
+  let fatRatio = grasa > 20 ? 0.65 : (grasa > 14 ? 0.60 : 0.55);
+  let protein = peso * proteinRatio;
+  let carbs = peso * 1.00;
+  let fat = peso * fatRatio;
+
+  if(grasa > 22) carbs *= 0.70;
+  else if(grasa > 18) carbs *= 0.84;
+  else if(grasa < 14) carbs *= 1.18;
+
+  if(musculo && musculo < 40) protein *= 1.05;
+  if(cintura > 95) carbs *= 0.90;
+  if(gymday === 'si') carbs *= 1.12;
+  if(anti === 'si'){ carbs *= 0.92; fat *= 0.92; }
+  if(social === 'si') carbs *= 0.94;
+
+  let weeklyLoss = null, waistTrend = null, progressText = '';
+  if(weights.length >= 8){
+    weeklyLoss = weights[weights.length-8] - peso;
+  } else if(weights.length >= 4){
+    weeklyLoss = (weights[weights.length-4] - peso) * 7/3;
+  }
+  if(waists.length >= 8){
+    waistTrend = waists[waists.length-8] - cintura;
+  } else if(waists.length >= 4){
+    waistTrend = waists[waists.length-4] - cintura;
+  }
+
+  if(weeklyLoss !== null){
+    if(weeklyLoss < 0.6){ carbs *= 0.92; progressText = 'Ritmo de pérdida lento: hoy se recortan ligeramente hidratos.'; }
+    else if(weeklyLoss > 1.6){ carbs *= 1.08; progressText = 'Ritmo de pérdida alto: hoy se suben un poco los hidratos para proteger músculo y rendimiento.'; }
+    else { progressText = 'Ritmo de pérdida correcto: hoy se mantiene el ajuste estándar.'; }
+  } else {
+    progressText = 'Aún hay pocos datos. Se usa el cálculo base de definición.';
+  }
+
+  let strategy = 'Definición normal';
+  let expl = 'Se busca seguir bajando grasa sin comprometer músculo.';
+  if(grasa > 22 && (weeklyLoss === null || weeklyLoss < 0.6) && gymday === 'no'){
+    strategy = 'Ayuno 24h';
+    expl = 'Grasa alta y ritmo de pérdida bajo. Se usa ayuno 24h para apretar el déficit.';
+  } else if(grasa > 18 && gymday === 'no'){
+    strategy = 'Ayuno 16h';
+    expl = 'Fase media de definición. Se usa ayuno 16h para facilitar adherencia y pérdida de grasa.';
+  } else if(grasa <= 16 && gymday === 'no' && cintura < 90){
+    strategy = 'Definición agresiva';
+    expl = 'Fase más fina y cintura contenida. Se aprieta el control de hidratos.';
+  } else if(gymday === 'si' || (weeklyLoss !== null && weeklyLoss > 1.4)){
+    strategy = 'Refeed estratégico';
+    expl = 'Hoy interesa proteger rendimiento, glucógeno y recuperación. Se usa refeed controlado.';
+  }
+
+  let carbTiming = 'comida + cena';
+  let carbExpl = 'Los hidratos se reparten entre comida y cena.';
+  if(strategy === 'Ayuno 24h'){ carbTiming = 'solo cena'; carbExpl = 'Hoy los hidratos se concentran en la cena porque el día es de ayuno 24h.'; }
+  else if(strategy === 'Ayuno 16h'){ carbTiming = 'solo cena'; carbExpl = 'Hoy los hidratos se concentran en la cena para mantener más horas en déficit.'; }
+  else if(strategy === 'Definición agresiva'){ carbTiming = 'solo cena'; carbExpl = 'Hoy los hidratos van a la noche para apretar más la definición.'; }
+  else if(strategy === 'Refeed estratégico'){ carbTiming = 'comida + cena'; carbExpl = 'Hoy se reparten hidratos entre comida y cena para rendimiento y recuperación.'; }
+  else if(grasa > 21 && cintura > 95){ carbTiming = 'mínimos'; carbExpl = 'Hoy se aprietan hidratos al mediodía y se deja el grueso para la noche.'; }
+  if(anti === 'si'){ carbExpl += ' Además, se priorizan fuentes mejor toleradas como tortitas, patata y fruta roja.'; }
+
+  document.getElementById('kpiP').innerText = protein.toFixed(0) + ' g';
+  document.getElementById('kpiC').innerText = carbs.toFixed(0) + ' g';
+  document.getElementById('kpiF').innerText = fat.toFixed(0) + ' g';
+  document.getElementById('macroText').innerHTML = 'Proteína ' + proteinRatio.toFixed(2) + ' g/kg · Grasas ' + fatRatio.toFixed(2) + ' g/kg. ' + progressText;
+  macroRing(protein, carbs, fat);
+
+  document.getElementById('strategy').innerHTML =
+    '<div class="badge">'+strategy+'</div>' +
+    '<div class="badge">HC '+carbTiming+'</div>' +
+    '<div class="note" style="margin-top:12px">'+expl+' '+carbExpl+'</div>';
+
+  let progress = 0;
+  if(grasa >= 25) progress = 8;
+  else if(grasa >= 22) progress = 18;
+  else if(grasa >= 19) progress = 35;
+  else if(grasa >= 16) progress = 55;
+  else if(grasa >= 13) progress = 75;
+  else if(grasa >= 11) progress = 92;
+  else progress = 100;
+  document.getElementById('sixPackFill').style.width = progress + '%';
+  document.getElementById('sixPackText').innerHTML =
+    '<span class="badge">Objetivo six-pack: '+targetWeight11.toFixed(1)+'–'+targetWeight12.toFixed(1)+' kg</span> ' +
+    '<span class="badge">Progreso visual: '+progress+'%</span>';
+
+  document.getElementById('targetBox').innerHTML =
+    'Masa magra estimada: <b>'+leanMass.toFixed(1)+' kg</b><br>' +
+    'Peso six-pack estimado: <b>'+targetWeight11.toFixed(1)+'–'+targetWeight12.toFixed(1)+' kg</b>';
+
+  document.getElementById('trendBox').innerHTML =
+    'Altura: <b>'+USER.height+' cm</b> · Edad: <b>'+USER.age+'</b> · Gym base: <b>'+USER.gymDays+' días</b><br>' +
+    'Ritmo pérdida semanal: <b>' + (weeklyLoss===null ? 'aún sin datos' : weeklyLoss.toFixed(2)+' kg/sem') + '</b><br>' +
+    'Cambio cintura: <b>' + (waistTrend===null ? 'aún sin datos' : waistTrend.toFixed(1)+' cm') + '</b>';
+
+  const idx = weights.length;
+  const sp1 = pick(FOODS.simple_proteins, idx);
+  const sp2 = pick(FOODS.simple_proteins, idx+2);
+  const sc1 = pick(FOODS.simple_carbs, idx);
+  const sc2 = pick(FOODS.simple_carbs, idx+3);
+  const dp1 = pick(FOODS.dinner_proteins, idx+1);
+  const dp2 = pick(FOODS.dinner_proteins, idx+4);
+  const dc1 = pick(FOODS.dinner_carbs, idx+2);
+  const dc2 = pick(FOODS.dinner_carbs, idx+1);
+  const vg = pick(FOODS.vegs, idx);
+  const ff = pick(FOODS.fats, idx+1);
+  const extra = pick(FOODS.night_extras, idx+2);
+
+  const includeLunch = strategy !== 'Ayuno 24h';
+  let lunchCarbRatio = 0.28, dinnerCarbRatio = 0.50;
+  if(carbTiming === 'solo cena'){ lunchCarbRatio = 0.00; dinnerCarbRatio = 0.78; }
+  if(carbTiming === 'mínimos'){ lunchCarbRatio = 0.10; dinnerCarbRatio = 0.66; }
+  if(carbTiming === 'comida + cena'){ lunchCarbRatio = 0.30; dinnerCarbRatio = 0.48; }
+
+  const targetP_lunch = includeLunch ? protein * 0.24 : 0;
+  const targetC_lunch = includeLunch ? carbs * lunchCarbRatio : 0;
+  const targetP_dinner = protein * (includeLunch ? 0.56 : 0.84);
+  const targetC_dinner = carbs * dinnerCarbRatio;
+  const targetF_dinner = fat * 0.64;
+  const targetP_night = Math.max(0, protein - targetP_lunch - targetP_dinner);
+
+  const sp1_g = includeLunch ? fitItem(sp1, targetP_lunch * 0.46, 'p', 40, 180) : 0;
+  const sp2_g = includeLunch ? fitItem(sp2, targetP_lunch * 0.34, 'p', 0, 180) : 0;
+  const sc1_g = includeLunch && targetC_lunch > 0 ? fitItem(sc1, targetC_lunch * 0.56, 'c', 0, 120) : 0;
+  let sc2_g = includeLunch && targetC_lunch > 0 ? fitItem(sc2, targetC_lunch * 0.22, 'c', 0, 180) : 0;
+  if(carbTiming === 'mínimos' && includeLunch) sc2_g = 0;
+
+  const dp1_g = fitItem(dp1, targetP_dinner * 0.52, 'p', 80, 260);
+  const dp2_g = fitItem(dp2, targetP_dinner * 0.24, 'p', 0, 180);
+  const dc1_g = targetC_dinner > 0 ? fitItem(dc1, targetC_dinner * 0.66, 'c', 0, 260) : 0;
+  let dc2_g = targetC_dinner > 0 ? fitItem(dc2, targetC_dinner * 0.14, 'c', 0, 180) : 0;
+  const vg_g = 200;
+  const ff_g = fitItem(ff, targetF_dinner * 0.74, 'f', 20, 80);
+  if(strategy === 'Ayuno 24h') dc2_g = 0;
+  const extra_g = extra.p > 0 ? fitItem(extra, targetP_night * 0.90, 'p', 0, 250) : 0;
+
+  const meals = [];
+  if(includeLunch){
+    if(sp1_g > 0) meals.push({time:'13:30', food:sp1, g:sp1_g});
+    if(sp2_g > 0) meals.push({time:'13:30', food:sp2, g:sp2_g});
+    if(sc1_g > 0) meals.push({time:'13:30', food:sc1, g:sc1_g});
+    if(sc2_g > 0) meals.push({time:'13:30', food:sc2, g:sc2_g});
+  }
+  if(dp1_g > 0) meals.push({time:'21:00', food:dp1, g:dp1_g});
+  if(dp2_g > 0) meals.push({time:'21:00', food:dp2, g:dp2_g});
+  if(dc1_g > 0) meals.push({time:'21:00', food:dc1, g:dc1_g});
+  if(dc2_g > 0) meals.push({time:'21:00', food:dc2, g:dc2_g});
+  meals.push({time:'21:00', food:vg, g:vg_g});
+  if(ff_g > 0) meals.push({time:'21:00', food:ff, g:ff_g});
+  if(extra_g > 0) meals.push({time:'22:00', food:extra, g:extra_g});
+
+  let html = '', totalP = 0, totalC = 0, totalF = 0, currentTime = '';
+  meals.forEach(function(item){
+    if(item.time !== currentTime){
+      if(currentTime !== '') html += '</div>';
+      html += '<div class="meal"><h4>'+item.time+'</h4>';
+      currentTime = item.time;
+    }
+    const mm = m(item.food, item.g);
+    totalP += mm.p; totalC += mm.c; totalF += mm.f;
+    html += '<div class="food"><div><b>'+item.food.name+'</b><div class="meta">'+item.g+' g</div></div><div class="meta">P '+mm.p.toFixed(1)+' · C '+mm.c.toFixed(1)+' · G '+mm.f.toFixed(1)+'</div></div>';
+  });
+  if(currentTime !== '') html += '</div>';
+  html += '<div class="summary"><b>Total real del menú</b><br>' +
+          'Proteína: '+totalP.toFixed(1)+' g<br>' +
+          'Hidratos: '+totalC.toFixed(1)+' g<br>' +
+          'Grasas: '+totalF.toFixed(1)+' g<br><br>' +
+          '<b>Diferencia respecto al objetivo</b><br>' +
+          'Proteína: '+(totalP-protein).toFixed(1)+' g<br>' +
+          'Hidratos: '+(totalC-carbs).toFixed(1)+' g<br>' +
+          'Grasas: '+(totalF-fat).toFixed(1)+' g<br><br>' +
+          '<b>Explicación del reparto</b><br>' +
+          'La app reparte proteína, hidratos y grasas entre varios alimentos de tu lista para evitar cantidades absurdas y mantener el plan realista y preciso.</div>';
+  document.getElementById('menu').innerHTML = html;
+
+  let agua = peso * 0.035;
+  if(gymday === 'si') agua += 0.7;
+  document.getElementById('water').innerHTML =
+    '<div class="badge">Agua recomendada: '+agua.toFixed(1)+' L</div>' +
+    '<div class="note" style="margin-top:12px">Cálculo automático: peso × 0.035. En días de gimnasio se añade margen extra para rendimiento y recuperación.</div>';
+
+  renderHistory();
+}
+renderSupplements();
+renderEqOptions();
+renderHistory();
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
+</script>
+</body>
+</html>
