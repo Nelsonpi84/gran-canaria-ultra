@@ -1,11 +1,14 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gran Canaria Ultra Coach</title><style>
+<title>Gran Canaria Ultra Coach</title>
+
+<style>
 
 body{
-font-family: Arial, Helvetica, sans-serif;
+font-family:Arial;
 background:#08111f;
 color:white;
 margin:0;
@@ -26,7 +29,6 @@ margin-bottom:20px;
 
 h1{
 text-align:center;
-margin-bottom:10px;
 }
 
 input,select{
@@ -36,7 +38,6 @@ margin-top:6px;
 margin-bottom:12px;
 border-radius:8px;
 border:none;
-font-size:16px;
 }
 
 button{
@@ -47,42 +48,72 @@ border:none;
 border-radius:10px;
 font-size:18px;
 font-weight:bold;
-cursor:pointer;
-}
-
-.result{
-margin-top:20px;
 }
 
 .metric{
 margin-bottom:10px;
 }
 
-</style></head><body><div class="container"><h1>Gran Canaria Ultra Coach</h1><div class="card"><h3>Datos de la mañana</h3><label>Peso (kg)</label>
-<input id="peso" type="number">
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Gran Canaria Ultra Coach</h1>
+
+<div class="card">
+
+<h3>Datos de la mañana</h3>
+
+<label>Peso (kg)</label>
+<input id="peso">
 
 <label>% grasa</label>
-<input id="grasa" type="number">
+<input id="grasa">
 
 <label>% músculo</label>
-<input id="musculo" type="number">
+<input id="musculo">
 
 <label>Cintura (cm)</label>
-<input id="cintura" type="number">
+<input id="cintura">
 
 <label>¿Hoy toca gimnasio?</label>
 <select id="gym">
-
 <option>No</option>
 <option>Si</option>
-</select><button onclick="calcular()">Generar protocolo</button>
+</select>
 
-</div><div class="card result"><h3>Macros objetivo</h3><div class="metric">Proteína: <span id="prot"></span> g</div>
+<button onclick="calcular()">Generar protocolo</button>
+
+</div>
+
+<div class="card">
+
+<h3>Macros objetivo</h3>
+
+<div class="metric">Proteína: <span id="prot"></span> g</div>
 <div class="metric">Hidratos: <span id="carb"></span> g</div>
-<div class="metric">Grasas: <span id="fat"></span> g</div></div><div class="card result"><h3>Predicción corporal</h3><div class="metric">Masa magra: <span id="lean"></span> kg</div>
+<div class="metric">Grasas: <span id="fat"></span> g</div>
+
+</div>
+
+<div class="card">
+
+<h3>Predicción corporal</h3>
+
+<div class="metric">Masa magra: <span id="lean"></span> kg</div>
 <div class="metric">Peso objetivo 12%: <span id="goal12"></span> kg</div>
 <div class="metric">Peso objetivo 10% (six-pack): <span id="goal10"></span> kg</div>
-<div class="metric">Semanas estimadas: <span id="weeks"></span></div></div></div><script>
+<div class="metric">Semanas estimadas: <span id="weeks"></span></div>
+
+</div>
+
+</div>
+
+<script>
 
 function calcular(){
 
@@ -122,5 +153,7 @@ document.getElementById("weeks").innerText=semanas.toFixed(1)+" semanas"
 
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
