@@ -1,87 +1,170 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gran Canaria Coach</title><style>
+<title>Gran Canaria Coach</title>
+
+<style>
+
 body{
 font-family:Arial;
-background:#0b132b;
+background:#081120;
 color:white;
 padding:20px;
 }
 
 .card{
-background:#1c2541;
+background:#111d33;
 padding:20px;
-border-radius:10px;
+border-radius:15px;
 margin-bottom:20px;
 }
 
 input{
 width:100%;
 padding:10px;
-margin-top:10px;
-border-radius:6px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:8px;
 border:none;
 }
 
 button{
-margin-top:20px;
-padding:12px;
-background:#00c853;
-border:none;
-border-radius:8px;
-font-weight:bold;
 width:100%;
+padding:12px;
+background:#22c55e;
+border:none;
+border-radius:10px;
+font-weight:bold;
 }
 
 .result{
-margin-top:20px;
-background:#3a506b;
+background:#0b1629;
 padding:15px;
-border-radius:8px;
+border-radius:10px;
+margin-top:15px;
 }
-</style></head><body><h2>Gran Canaria Coach</h2><div class="card">Peso (kg)
+
+</style>
+
+</head>
+<body>
+
+<h1>Gran Canaria Coach</h1>
+
+<div class="card">
+
+<label>Peso</label>
 <input id="peso">
 
-% grasa
+<label>% grasa</label>
 <input id="grasa">
 
-Cintura (cm)
+<label>% músculo</label>
+<input id="musculo">
+
+<label>Cintura</label>
 <input id="cintura">
 
 <button onclick="calcular()">Generar plan</button>
 
-</div><div class="card result" id="resultado">
-Esperando datos...
-</div><script>
+</div>
+
+<div id="resultado"></div>
+
+<script>
 
 function calcular(){
 
 let peso=parseFloat(document.getElementById("peso").value)
 let grasa=parseFloat(document.getElementById("grasa").value)
+let musculo=parseFloat(document.getElementById("musculo").value)
+let cintura=parseFloat(document.getElementById("cintura").value)
 
-let prote= Math.round(peso*2.3)
-let grasaMacro=Math.round(peso*0.7)
-let hidratos=Math.round(peso*1)
+let proteina=Math.round(peso*2.3)
+let hidratos=Math.round(peso*0.8)
+let grasas=Math.round(peso*0.6)
 
 let estrategia="Definición"
 
-if(grasa>20) estrategia="Ayuno 24h"
-if(grasa<15) estrategia="Refeed estratégico"
+if(grasa>20) estrategia="Ayuno 16h"
+if(grasa>23) estrategia="Ayuno 24h"
 
-document.getElementById("resultado").innerHTML=
+let menu=""
 
-`
-<b>Estrategia:</b> ${estrategia}<br><br>
+if(estrategia=="Ayuno 24h"){
 
-<b>Macros objetivo</b><br>
-Proteína: ${prote} g<br>
-Hidratos: ${hidratos} g<br>
-Grasas: ${grasaMacro} g<br>
+menu=`
+20:30
+
+Pechuga pollo 250g  
+Patata cocida 200g  
+Verduras 200g  
+Queso fresco batido 250g
 `
 
 }
 
-</script></body>
+else{
+
+menu=`
+
+14:00
+
+Pavo 150g  
+Tortitas arroz 20g  
+
+21:00
+
+Merluza 220g  
+Patata 200g  
+Verduras 200g  
+
+22:30
+
+Queso fresco batido 200g
+`
+
+}
+
+document.getElementById("resultado").innerHTML=`
+
+<div class="card">
+
+<h2>Estrategia</h2>
+
+<div class="result">
+
+${estrategia}
+
+</div>
+
+<h2>Macros objetivo</h2>
+
+<div class="result">
+
+Proteína ${proteina} g<br>
+Hidratos ${hidratos} g<br>
+Grasas ${grasas} g
+
+</div>
+
+<h2>Menú</h2>
+
+<div class="result">
+
+${menu}
+
+</div>
+
+</div>
+
+`
+
+}
+
+</script>
+
+</body>
 </html>
