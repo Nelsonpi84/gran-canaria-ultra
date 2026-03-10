@@ -1,11 +1,11 @@
 {
-  "name": "Gran Canaria V12.2 Stable",
-  "short_name": "GC V12.2",
+  "name": "Gran Canaria Coach Rebuilt",
+  "short_name": "GC Rebuilt",
   "display": "standalone",
   "start_url": "./index.html",
   "background_color": "#07111f",
   "theme_color": "#22c55e",
-  "description": "Versión estable y funcional con ajuste estricto.",
+  "description": "Coach rehecho desde cero con reglas duras y validación final.",
   "icons": [
     {
       "src": "icon-192.png",
