@@ -3,38 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gran Canaria Ultra Coach</title>
+<title>Gran Canaria Ultra Coach V22</title>
 
 <style>
 body{
-font-family:Arial;
-background:#08111f;
-color:white;
-padding:20px;
+  font-family:Arial;
+  background:#08111f;
+  color:white;
+  padding:20px;
+  margin:0;
 }
-
+h1{
+  margin-top:0;
+}
 .card{
-background:#101c35;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
+  background:#101c35;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
 }
-
 button{
-background:#22c55e;
-border:none;
-padding:15px;
-border-radius:10px;
-font-size:18px;
-width:100%;
+  background:#22c55e;
+  border:none;
+  padding:15px;
+  border-radius:10px;
+  font-size:18px;
+  width:100%;
+  font-weight:bold;
 }
-
 input,select{
-width:100%;
-padding:10px;
-margin-bottom:10px;
-border-radius:8px;
-border:none;
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:none;
+  font-size:16px;
+}
+.line{
+  margin-bottom:8px;
+}
+.menu-box{
+  background:#0a1528;
+  border-radius:12px;
+  padding:14px;
+  margin-top:10px;
+  line-height:1.6;
+}
+.badge{
+  display:inline-block;
+  background:#0a1528;
+  border:1px solid #29415f;
+  padding:8px 12px;
+  border-radius:999px;
+  margin-right:8px;
+  margin-bottom:8px;
 }
 </style>
 
@@ -42,73 +64,176 @@ border:none;
 
 <body>
 
-<h1>Gran Canaria Ultra Coach V21</h1>
+<h1>Gran Canaria Ultra Coach V22</h1>
 
 <div class="card">
+  <h3>Datos de la mañana</h3>
 
-<h3>Datos de la mañana</h3>
+  <label>Peso</label>
+  <input id="peso" value="94.2">
 
-Peso
-<input id="peso" value="94.2">
+  <label>% grasa</label>
+  <input id="grasa" value="22.4">
 
-% grasa
-<input id="grasa" value="22.4">
+  <label>% músculo</label>
+  <input id="musculo" value="50">
 
-% músculo
-<input id="musculo" value="50">
+  <label>Cintura</label>
+  <input id="cintura" value="100">
 
-Cintura
-<input id="cintura" value="100">
+  <label>¿Gym hoy?</label>
+  <select id="gym">
+    <option>No</option>
+    <option>Si</option>
+  </select>
 
-¿Gym hoy?
-<select id="gym">
-<option>No</option>
-<option>Si</option>
-</select>
-
-<button onclick="calcular()">Generar protocolo</button>
-
+  <button onclick="calcular()">Generar protocolo</button>
 </div>
 
 <div class="card">
+  <h3>Estrategia del día</h3>
+  <div id="estrategiaBadges"></div>
+  <div id="estrategiaTexto"></div>
+</div>
 
-<h3>Resultados</h3>
+<div class="card">
+  <h3>Resultados</h3>
+  <div class="line" id="prot"></div>
+  <div class="line" id="carb"></div>
+  <div class="line" id="fat"></div>
+  <div class="line" id="lean"></div>
+  <div class="line" id="goal12"></div>
+  <div class="line" id="goal10"></div>
+</div>
 
-<div id="prot"></div>
-<div id="carb"></div>
-<div id="fat"></div>
-<div id="lean"></div>
-<div id="goal"></div>
-
+<div class="card">
+  <h3>Menú del día</h3>
+  <div id="menu"></div>
 </div>
 
 <script>
-
 function calcular(){
 
-let peso=parseFloat(document.getElementById("peso").value)
-let grasa=parseFloat(document.getElementById("grasa").value)
+  let peso=parseFloat(document.getElementById("peso").value);
+  let grasa=parseFloat(document.getElementById("grasa").value);
+  let gym=document.getElementById("gym").value;
+  let cintura=parseFloat(document.getElementById("cintura").value);
 
-let proteina=Math.round(peso*2.4)
-let grasas=Math.round(peso*0.65)
-let hidratos=55
+  let proteina=0;
+  let grasas=0;
+  let hidratos=0;
+  let estrategia="";
+  let timing="";
+  let explicacion="";
+  let menu="";
 
-let masaMagra=peso*(1-grasa/100)
+  if(gym==="Si"){
+    estrategia="Definición con hidratos";
+    timing="HC comida + cena";
+    proteina=Math.round(peso*2.3);
+    grasas=Math.round(peso*0.60);
+    hidratos=100;
+    explicacion="Día de gimnasio. Se mantienen hidratos moderados para rendir y proteger masa muscular.";
 
-let objetivo=masaMagra/0.88
+    menu=`
+      <div class="menu-box">
+        <b>14:00</b><br>
+        Cecina 80 g<br>
+        Queso fresco batido 250 g<br>
+        Pan integral Mercadona 70 g<br>
+        Fresas 100 g
+      </div>
 
-document.getElementById("prot").innerHTML="Proteína objetivo: "+proteina+" g"
+      <div class="menu-box">
+        <b>21:00</b><br>
+        Merluza 250 g<br>
+        Patata cocida 250 g<br>
+        Aguacate 35 g<br>
+        Pimientos 150 g
+      </div>
 
-document.getElementById("carb").innerHTML="Hidratos objetivo: "+hidratos+" g"
+      <div class="menu-box">
+        <b>22:30</b><br>
+        Yogur griego 200 g<br>
+        Queso cottage 200 g
+      </div>
+    `;
+  } else {
+    if(grasa>=22 && cintura>=98){
+      estrategia="Ayuno 24h";
+      timing="HC solo cena";
+      proteina=Math.round(peso*2.4);
+      grasas=Math.round(peso*0.65);
+      hidratos=55;
+      explicacion="Día sin gym, grasa y cintura altas. Se usa una ventana principal para apretar la definición.";
 
-document.getElementById("fat").innerHTML="Grasas objetivo: "+grasas+" g"
+      menu=`
+        <div class="menu-box">
+          <b>21:00</b><br>
+          Merluza 300 g<br>
+          Hamburguesa 98% carne 200 g<br>
+          Patata cocida 140 g<br>
+          Aguacate 35 g<br>
+          Endivias 120 g
+        </div>
 
-document.getElementById("lean").innerHTML="Masa magra: "+masaMagra.toFixed(1)+" kg"
+        <div class="menu-box">
+          <b>22:00</b><br>
+          Queso fresco batido 300 g<br>
+          Yogur griego 200 g
+        </div>
+      `;
+    } else {
+      estrategia="Ayuno 16h";
+      timing="HC sobre todo cena";
+      proteina=Math.round(peso*2.4);
+      grasas=Math.round(peso*0.65);
+      hidratos=55;
+      explicacion="Día sin gym con enfoque ligero y digestivo.";
 
-document.getElementById("goal").innerHTML="Peso six-pack aprox: "+objetivo.toFixed(1)+" kg"
+      menu=`
+        <div class="menu-box">
+          <b>14:00</b><br>
+          Jamón curado 70 g<br>
+          Queso cottage 250 g<br>
+          Pan integral Mercadona 40 g<br>
+          Frutos rojos 80 g
+        </div>
 
+        <div class="menu-box">
+          <b>21:00</b><br>
+          Pechuga pollo airfryer 250 g<br>
+          Patata cocida 140 g<br>
+          Aguacate 35 g<br>
+          Pimientos 150 g
+        </div>
+
+        <div class="menu-box">
+          <b>22:30</b><br>
+          Queso fresco batido 250 g
+        </div>
+      `;
+    }
+  }
+
+  let masaMagra=peso*(1-grasa/100);
+  let objetivo12=masaMagra/0.88;
+  let objetivo10=masaMagra/0.90;
+
+  document.getElementById("estrategiaBadges").innerHTML=
+    '<span class="badge">'+estrategia+'</span><span class="badge">'+timing+'</span>';
+
+  document.getElementById("estrategiaTexto").innerHTML=explicacion;
+
+  document.getElementById("prot").innerHTML="Proteína objetivo: <b>"+proteina+" g</b>";
+  document.getElementById("carb").innerHTML="Hidratos objetivo: <b>"+hidratos+" g</b>";
+  document.getElementById("fat").innerHTML="Grasas objetivo: <b>"+grasas+" g</b>";
+  document.getElementById("lean").innerHTML="Masa magra: <b>"+masaMagra.toFixed(1)+" kg</b>";
+  document.getElementById("goal12").innerHTML="Peso objetivo 12%: <b>"+objetivo12.toFixed(1)+" kg</b>";
+  document.getElementById("goal10").innerHTML="Peso six-pack aprox (10%): <b>"+objetivo10.toFixed(1)+" kg</b>";
+
+  document.getElementById("menu").innerHTML=menu;
 }
-
 </script>
 
 </body>
