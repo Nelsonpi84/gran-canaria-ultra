@@ -1,170 +1,958 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gran Canaria Coach</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gran Canaria Coach Elite</title>
+  <style>
+    :root{
+      --bg:#08111f;
+      --bg2:#0d1830;
+      --card:#101c35;
+      --card2:#172847;
+      --line:#29415f;
+      --text:#f8fafc;
+      --muted:#bfd0e4;
+      --green:#22c55e;
+      --green2:#16a34a;
+      --blue:#38bdf8;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --violet:#8b5cf6;
+    }
 
-<style>
+    *{box-sizing:border-box}
 
-body{
-font-family:Arial;
-background:#081120;
-color:white;
-padding:20px;
-}
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(56,189,248,.14), transparent 18%),
+        radial-gradient(circle at 100% 0%, rgba(139,92,246,.10), transparent 18%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+    }
 
-.card{
-background:#111d33;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-}
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px;
+    }
 
-input{
-width:100%;
-padding:10px;
-margin-top:5px;
-margin-bottom:15px;
-border-radius:8px;
-border:none;
-}
+    .hero{
+      background:linear-gradient(135deg,#0ea5e9 0%, #2563eb 35%, #8b5cf6 70%, #22c55e 100%);
+      border-radius:24px;
+      padding:22px;
+      margin-bottom:16px;
+      box-shadow:0 18px 40px rgba(0,0,0,.25);
+    }
 
-button{
-width:100%;
-padding:12px;
-background:#22c55e;
-border:none;
-border-radius:10px;
-font-weight:bold;
-}
+    .hero h1{
+      margin:0 0 8px 0;
+      font-size:32px;
+    }
 
-.result{
-background:#0b1629;
-padding:15px;
-border-radius:10px;
-margin-top:15px;
-}
+    .hero p{
+      margin:0;
+      line-height:1.45;
+    }
 
-</style>
+    .pills{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
 
+    .pill{
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.18);
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .grid3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .row2{
+      display:grid;
+      grid-template-columns:1.12fr .88fr;
+      gap:14px;
+    }
+
+    @media(max-width:920px){
+      .grid,.grid3,.row2{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .card{
+      background:linear-gradient(180deg,var(--card),var(--card2));
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      margin-bottom:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+    }
+
+    h2,h3{
+      margin:0 0 10px 0;
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin:10px 0 4px;
+    }
+
+    input,select{
+      width:100%;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid #33557a;
+      background:#081423;
+      color:var(--text);
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      padding:13px;
+      border:0;
+      border-radius:14px;
+      font-weight:700;
+      cursor:pointer;
+      margin-top:12px;
+      background:linear-gradient(90deg,var(--green),var(--green2));
+      color:#03130a;
+      font-size:16px;
+    }
+
+    .secondary{
+      background:linear-gradient(90deg,var(--blue),#2563eb);
+      color:white;
+    }
+
+    .kpi{
+      padding:16px;
+      background:linear-gradient(180deg,#0b1629,#122441);
+      border:1px solid var(--line);
+      border-radius:20px;
+    }
+
+    .kpi .t{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:6px;
+    }
+
+    .kpi .v{
+      font-size:30px;
+      font-weight:800;
+    }
+
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#091425;
+      border:1px solid var(--line);
+      margin-right:8px;
+      margin-bottom:8px;
+      font-size:13px;
+    }
+
+    .note{
+      border-left:4px solid var(--blue);
+      padding-left:12px;
+      color:var(--muted);
+      line-height:1.5;
+      margin-top:8px;
+    }
+
+    .ring{
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      margin:0 auto 10px;
+      display:grid;
+      place-items:center;
+      background:conic-gradient(#38bdf8 0deg,#38bdf8 120deg,#f59e0b 120deg 240deg,#22c55e 240deg 360deg);
+    }
+
+    .ring-inner{
+      width:145px;
+      height:145px;
+      border-radius:50%;
+      background:#091425;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:10px;
+    }
+
+    .legend{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      display:inline-block;
+      margin-right:6px;
+    }
+
+    .meal{
+      background:#091425;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:12px;
+    }
+
+    .meal h4{
+      margin:0 0 8px 0;
+      font-size:20px;
+    }
+
+    .food{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:8px 0;
+      border-bottom:1px dashed #29415f;
+    }
+
+    .food:last-child{
+      border-bottom:0;
+    }
+
+    .summary{
+      background:#0a1526;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      margin-top:10px;
+      line-height:1.55;
+    }
+
+    .checkrow{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px dashed #29415f;
+    }
+
+    .checkrow:last-child{
+      border-bottom:0;
+    }
+
+    .checkrow input{
+      width:auto;
+      transform:scale(1.2);
+      margin-top:4px;
+    }
+
+    .ok{color:#86efac}
+    .warn{color:#fcd34d}
+    .bad{color:#fca5a5}
+
+    #warning{
+      color:#fcd34d;
+      white-space:pre-line;
+      margin-top:8px;
+      line-height:1.45;
+    }
+
+    .history{
+      max-height:280px;
+      overflow:auto;
+    }
+
+    .history-item{
+      padding:8px 0;
+      border-bottom:1px dashed #29415f;
+      color:var(--muted);
+    }
+
+    .history-item:last-child{
+      border-bottom:0;
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Gran Canaria Coach Elite</h1>
+      <p>Basada en tus datos reales. Optimiza definición, protege masa muscular y estima tu llegada a six-pack con una estrategia diaria más seria.</p>
+      <div class="pills">
+        <div class="pill" id="fechaHoy">-</div>
+        <div class="pill">Objetivo seco: 84–86 kg</div>
+        <div class="pill">Masa magra base: 73.1 kg</div>
+        <div class="pill">BMR: 1950 kcal</div>
+      </div>
+    </div>
 
-<h1>Gran Canaria Coach</h1>
+    <div class="grid">
+      <div class="card">
+        <h3>Datos de la mañana</h3>
+        <label>Peso (kg)</label>
+        <input id="peso" type="number" step="0.1" value="94.3" />
 
-<div class="card">
+        <label>% grasa</label>
+        <input id="grasa" type="number" step="0.1" value="22.4" />
 
-<label>Peso</label>
-<input id="peso">
+        <label>% músculo</label>
+        <input id="musculo" type="number" step="0.1" value="50.1" />
 
-<label>% grasa</label>
-<input id="grasa">
+        <label>Cintura (cm)</label>
+        <input id="cintura" type="number" step="0.1" value="100" />
+      </div>
 
-<label>% músculo</label>
-<input id="musculo">
+      <div class="card">
+        <h3>Ajustes del día</h3>
 
-<label>Cintura</label>
-<input id="cintura">
+        <label>¿Hoy toca gimnasio?</label>
+        <select id="gym">
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
 
-<button onclick="calcular()">Generar plan</button>
+        <label>Modo antiinflamación</label>
+        <select id="anti">
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
 
-</div>
+        <label>Evento social hoy</label>
+        <select id="social">
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
 
-<div id="resultado"></div>
+        <button id="btnGenerar">Generar plan elite</button>
+        <button id="btnExportar" class="secondary">Exportar TXT</button>
 
-<script>
+        <div id="warning"></div>
+      </div>
+    </div>
 
-function calcular(){
+    <div class="grid3">
+      <div class="kpi">
+        <div class="t">Proteína objetivo</div>
+        <div class="v" id="kpiP">-</div>
+      </div>
+      <div class="kpi">
+        <div class="t">Hidratos objetivo</div>
+        <div class="v" id="kpiC">-</div>
+      </div>
+      <div class="kpi">
+        <div class="t">Grasas objetivo</div>
+        <div class="v" id="kpiG">-</div>
+      </div>
+    </div>
 
-let peso=parseFloat(document.getElementById("peso").value)
-let grasa=parseFloat(document.getElementById("grasa").value)
-let musculo=parseFloat(document.getElementById("musculo").value)
-let cintura=parseFloat(document.getElementById("cintura").value)
+    <div class="grid">
+      <div class="card">
+        <h3>Macros reales</h3>
+        <div class="ring" id="ring">
+          <div class="ring-inner">
+            <div>
+              <div class="small">Total macros</div>
+              <div id="ringTotal" style="font-size:24px;font-weight:800;">-</div>
+              <div id="ringText" class="small">P - · C - · G -</div>
+            </div>
+          </div>
+        </div>
+        <div class="legend">
+          <div><span class="dot" style="background:#38bdf8"></span>Proteína</div>
+          <div><span class="dot" style="background:#f59e0b"></span>Hidratos</div>
+          <div><span class="dot" style="background:#22c55e"></span>Grasas</div>
+        </div>
+      </div>
 
-let proteina=Math.round(peso*2.3)
-let hidratos=Math.round(peso*0.8)
-let grasas=Math.round(peso*0.6)
+      <div class="card">
+        <h3>Estrategia y predicción</h3>
+        <div id="strategyBox"></div>
+      </div>
+    </div>
 
-let estrategia="Definición"
+    <div class="row2">
+      <div class="card">
+        <h3>Menú diario</h3>
+        <div id="menuBox"></div>
+      </div>
 
-if(grasa>20) estrategia="Ayuno 16h"
-if(grasa>23) estrategia="Ayuno 24h"
+      <div>
+        <div class="card">
+          <h3>Agua y suplementos</h3>
+          <div id="checkBox"></div>
+        </div>
 
-let menu=""
+        <div class="card">
+          <h3>Histórico</h3>
+          <div class="history" id="historyBox"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-if(estrategia=="Ayuno 24h"){
+  <script>
+    const FOODS = {
+      proteins: {
+        pavo: { n:"Pavo Carloteña", p:21, c:1, f:1, min:100, max:220, step:10 },
+        pollo: { n:"Pechuga pollo airfryer", p:23, c:0, f:2, min:140, max:260, step:10 },
+        salmon: { n:"Salmón airfryer", p:22, c:0, f:12, min:140, max:220, step:10 },
+        merluza: { n:"Merluza congelada", p:20, c:0, f:2, min:140, max:260, step:10 },
+        bonito: { n:"Bonito en aceite oliva", p:24, c:0, f:8, min:80, max:150, step:10 },
+        ahumado: { n:"Salmón ahumado", p:20, c:0, f:8, min:80, max:140, step:10 },
+        huevos: { n:"Huevos", p:13, c:1, f:11, min:100, max:180, step:10 },
+        gamba: { n:"Gamba blanca", p:20, c:1, f:1, min:140, max:240, step:10 },
+        solomillo: { n:"Solomillo", p:22, c:0, f:8, min:140, max:220, step:10 },
+        qfb: { n:"Queso fresco batido 0%", p:10, c:3.3, f:0.2, min:150, max:300, step:25 },
+        yogur: { n:"Yogur griego", p:10, c:4, f:5, min:150, max:250, step:25 }
+      },
+      carbs: {
+        patata: { n:"Patata cocida", p:2, c:17, f:0, min:120, max:300, step:20 },
+        tortitas: { n:"Tortitas arroz", p:7, c:81, f:3, min:15, max:45, step:5 },
+        bagel: { n:"Bagel", p:9, c:48, f:1, min:40, max:90, step:10 },
+        pan: { n:"Pan integral Mercadona", p:10, c:43, f:4, min:30, max:90, step:10 },
+        noquis: { n:"Ñoquis", p:4, c:28, f:1, min:80, max:220, step:20 },
+        macarrones: { n:"Macarrones proteicos", p:8.8, c:56, f:2.3, min:40, max:100, step:10 },
+        manzana: { n:"Manzana", p:0.3, c:14, f:0.2, min:100, max:180, step:20 },
+        fresas: { n:"Fresas", p:1, c:8, f:0.3, min:80, max:150, step:10 },
+        frutos: { n:"Frutos rojos", p:1, c:12, f:0.3, min:60, max:120, step:10 },
+        pina: { n:"Piña", p:0.5, c:13, f:0.1, min:80, max:180, step:20 }
+      },
+      fats: {
+        aguacate: { n:"Aguacate", p:2, c:9, f:15, min:20, max:70, step:5 },
+        nueces: { n:"Nueces", p:15, c:14, f:65, min:10, max:30, step:5 }
+      },
+      vegs: {
+        verduras: { n:"Verduras airfryer", p:2, c:6, f:0.5, g:200 },
+        pimientos: { n:"Pimientos", p:1, c:6, f:0.2, g:180 },
+        endivias: { n:"Endivias", p:1.2, c:3.5, f:0.2, g:120 }
+      }
+    };
 
-menu=`
-20:30
+    const SUPPS = [
+      ["VM-2000","mañana"],
+      ["Omega-3","cena"],
+      ["Vitamina D3","mañana"],
+      ["Zinc","noche"],
+      ["Biotina","mañana"],
+      ["Magnesio","noche"]
+    ];
 
-Pechuga pollo 250g  
-Patata cocida 200g  
-Verduras 200g  
-Queso fresco batido 250g
-`
+    let weights = JSON.parse(localStorage.getItem("gc_elite_weights") || "[]");
+    let logs = JSON.parse(localStorage.getItem("gc_elite_logs") || "[]");
+    let lastPlan = JSON.parse(localStorage.getItem("gc_elite_plan") || "null");
 
-}
+    const $ = id => document.getElementById(id);
 
-else{
+    const fmt = v => Number(v).toFixed(1);
+    const num = v => parseFloat(String(v).replace(",", "."));
 
-menu=`
+    function foodMacros(food, g){
+      return {
+        p: food.p * g / 100,
+        c: food.c * g / 100,
+        f: food.f * g / 100
+      };
+    }
 
-14:00
+    function sumItems(items){
+      return items.reduce((a, it) => {
+        const m = foodMacros(it.food, it.g);
+        a.p += m.p;
+        a.c += m.c;
+        a.f += m.f;
+        return a;
+      }, {p:0, c:0, f:0});
+    }
 
-Pavo 150g  
-Tortitas arroz 20g  
+    function setToday(){
+      const d = new Date();
+      const dias = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+      $("fechaHoy").innerText = dias[d.getDay()] + " · " + d.toLocaleDateString("es-ES");
+    }
 
-21:00
+    function diffClass(v){
+      if (Math.abs(v) <= 10) return "ok";
+      if (Math.abs(v) <= 20) return "warn";
+      return "bad";
+    }
 
-Merluza 220g  
-Patata 200g  
-Verduras 200g  
+    function setRing(p, c, f){
+      const total = p + c + f || 1;
+      const pDeg = (p / total) * 360;
+      const cDeg = (c / total) * 360;
+      $("ring").style.background = `conic-gradient(#38bdf8 0deg ${pDeg}deg,#f59e0b ${pDeg}deg ${pDeg+cDeg}deg,#22c55e ${pDeg+cDeg}deg 360deg)`;
+      $("ringTotal").innerText = Math.round(total) + " g";
+      $("ringText").innerText = `P ${Math.round(p)} · C ${Math.round(c)} · G ${Math.round(f)}`;
+    }
 
-22:30
+    function buildHistory(){
+      if (!logs.length){
+        $("historyBox").innerHTML = '<div class="history-item">Sin registros todavía.</div>';
+        return;
+      }
 
-Queso fresco batido 200g
-`
+      $("historyBox").innerHTML = logs.slice().reverse().slice(0,20).map(l => `
+        <div class="history-item">${l.fecha} · ${l.peso} kg · ${l.grasa}% grasa · ${l.cintura} cm cintura</div>
+      `).join("");
+    }
 
-}
+    function buildChecks(waterLiters){
+      let html = `<div class="badge">Agua recomendada: ${fmt(waterLiters)} L</div><div class="summary">`;
 
-document.getElementById("resultado").innerHTML=`
+      SUPPS.forEach((s, i) => {
+        const key = "elite_supp_" + i;
+        const checked = localStorage.getItem(key) === "1" ? "checked" : "";
+        html += `
+          <div class="checkrow">
+            <input type="checkbox" class="memcheck" data-key="${key}" ${checked}>
+            <div>
+              <b>${s[0]}</b><br>
+              <span class="small">${s[1]}</span>
+            </div>
+          </div>
+        `;
+      });
 
-<div class="card">
+      const waterKey = "elite_water_done";
+      const waterChecked = localStorage.getItem(waterKey) === "1" ? "checked" : "";
+      html += `
+        <div class="checkrow">
+          <input type="checkbox" class="memcheck" data-key="${waterKey}" ${waterChecked}>
+          <div>
+            <b>Agua completada</b><br>
+            <span class="small">Marca cuando llegues al objetivo</span>
+          </div>
+        </div>
+      `;
+      html += `</div>`;
 
-<h2>Estrategia</h2>
+      $("checkBox").innerHTML = html;
 
-<div class="result">
+      document.querySelectorAll(".memcheck").forEach(el => {
+        el.addEventListener("change", e => {
+          localStorage.setItem(e.target.dataset.key, e.target.checked ? "1" : "0");
+        });
+      });
+    }
 
-${estrategia}
+    function getWeeklyLoss(currentWeight){
+      if (weights.length >= 8) return weights[weights.length - 8] - currentWeight;
+      if (weights.length >= 4) return (weights[weights.length - 4] - currentWeight) * (7 / 3);
+      return null;
+    }
 
-</div>
+    function chooseStrategy(grasa, cintura, gym, weeklyLoss, social){
+      if (social === "si" && gym === "si"){
+        return {
+          name:"Refeed estratégico",
+          why:"Entreno + evento social: se reparten hidratos sin descontrol.",
+          meals:["14:00","21:00","22:30"]
+        };
+      }
 
-<h2>Macros objetivo</h2>
+      if (gym === "no" && grasa >= 22 && cintura >= 95 && (weeklyLoss === null || weeklyLoss < 0.7)){
+        return {
+          name:"Ayuno 24h",
+          why:"Grasa y cintura altas con progreso flojo: una sola ventana real.",
+          meals:["20:30"]
+        };
+      }
 
-<div class="result">
+      if (gym === "no" && grasa >= 18){
+        return {
+          name:"Ayuno 16h",
+          why:"Día sin entreno: dos comidas y la mayor parte del hidrato al final.",
+          meals:["14:00","21:00"]
+        };
+      }
 
-Proteína ${proteina} g<br>
-Hidratos ${hidratos} g<br>
-Grasas ${grasas} g
+      if (gym === "si"){
+        return {
+          name:"Definición con hidratos",
+          why:"Día de entreno: más hidratos para rendimiento y recuperación.",
+          meals:["14:00","21:00","22:30"]
+        };
+      }
 
-</div>
+      return {
+        name:"Definición baja en hidratos",
+        why:"Día normal de definición con control de energía y hambre.",
+        meals:["14:00","21:00","22:30"]
+      };
+    }
 
-<h2>Menú</h2>
+    function getTargets(weight, gym, strategy){
+      let p = 215;
+      let f = 56;
+      let c = 95;
 
-<div class="result">
+      if (strategy.name === "Ayuno 24h") c = 45;
+      if (strategy.name === "Ayuno 16h") c = 70;
+      if (strategy.name === "Definición con hidratos") c = 110;
+      if (strategy.name === "Refeed estratégico") c = 145;
+      if (gym === "si" && strategy.name !== "Refeed estratégico") c += 10;
 
-${menu}
+      return { p, c, f };
+    }
 
-</div>
+    function getRotation(index){
+      const lunchP = [FOODS.proteins.pavo, FOODS.proteins.bonito, FOODS.proteins.ahumado];
+      const dinnerP1 = [FOODS.proteins.pollo, FOODS.proteins.merluza, FOODS.proteins.solomillo, FOODS.proteins.salmon];
+      const dinnerP2 = [FOODS.proteins.gamba, FOODS.proteins.huevos, FOODS.proteins.merluza, FOODS.proteins.pollo];
+      const lunchC = [FOODS.carbs.tortitas, FOODS.carbs.bagel, FOODS.carbs.pan];
+      const dinnerC = [FOODS.carbs.patata, FOODS.carbs.noquis, FOODS.carbs.macarrones];
+      const nightP = [FOODS.proteins.qfb, FOODS.proteins.yogur];
+      const nightC = [FOODS.carbs.frutos, FOODS.carbs.fresas, FOODS.carbs.manzana, FOODS.carbs.pina];
+      const fats = [FOODS.fats.aguacate, FOODS.fats.nueces];
+      const vegs = [FOODS.vegs.verduras, FOODS.vegs.pimientos, FOODS.vegs.endivias];
 
-</div>
+      return {
+        lunchP: lunchP[index % lunchP.length],
+        dinnerP1: dinnerP1[index % dinnerP1.length],
+        dinnerP2: dinnerP2[index % dinnerP2.length],
+        lunchC: lunchC[index % lunchC.length],
+        dinnerC: dinnerC[index % dinnerC.length],
+        nightP: nightP[index % nightP.length],
+        nightC: nightC[index % nightC.length],
+        fat: fats[index % fats.length],
+        veg: vegs[index % vegs.length]
+      };
+    }
 
-`
+    function addFood(items, time, food, grams){
+      if (grams <= 0) return;
+      const found = items.find(it => it.time === time && it.food.n === food.n);
+      if (found){
+        found.g = Math.min(food.max || 999, found.g + grams);
+      } else {
+        items.push({
+          time,
+          food,
+          g: Math.min(food.max || 999, Math.max(food.min || grams, grams))
+        });
+      }
+    }
 
-}
+    function buildPlan(targets, strategy, rot){
+      const items = [];
 
-</script>
+      if (strategy.name === "Ayuno 24h"){
+        addFood(items, "20:30", rot.dinnerP1, 240);
+        addFood(items, "20:30", rot.dinnerP2, 170);
+        addFood(items, "20:30", rot.dinnerC, rot.dinnerC.n === "Macarrones proteicos" ? 50 : 180);
+        addFood(items, "20:30", rot.veg, rot.veg.g);
+        addFood(items, "20:30", rot.fat, 20);
+        addFood(items, "20:30", rot.nightP, 200);
+      } else if (strategy.name === "Ayuno 16h"){
+        addFood(items, "14:00", rot.lunchP, 160);
+        addFood(items, "21:00", rot.dinnerP1, 230);
+        addFood(items, "21:00", rot.dinnerP2, 180);
+        addFood(items, "21:00", rot.dinnerC, rot.dinnerC.n === "Macarrones proteicos" ? 40 : 180);
+        addFood(items, "21:00", rot.veg, rot.veg.g);
+        addFood(items, "21:00", rot.fat, 20);
+      } else if (strategy.name === "Definición con hidratos"){
+        addFood(items, "14:00", rot.lunchP, 160);
+        addFood(items, "14:00", rot.lunchC, rot.lunchC.n === "Tortitas arroz" ? 25 : 60);
+        addFood(items, "21:00", rot.dinnerP1, 220);
+        addFood(items, "21:00", rot.dinnerP2, 170);
+        addFood(items, "21:00", rot.dinnerC, rot.dinnerC.n === "Macarrones proteicos" ? 60 : 220);
+        addFood(items, "21:00", rot.veg, rot.veg.g);
+        addFood(items, "21:00", rot.fat, 20);
+        addFood(items, "22:30", rot.nightP, 180);
+        addFood(items, "22:30", rot.nightC, 80);
+      } else if (strategy.name === "Refeed estratégico"){
+        addFood(items, "14:00", rot.lunchP, 170);
+        addFood(items, "14:00", rot.lunchC, rot.lunchC.n === "Tortitas arroz" ? 30 : 70);
+        addFood(items, "21:00", rot.dinnerP1, 220);
+        addFood(items, "21:00", rot.dinnerP2, 170);
+        addFood(items, "21:00", rot.dinnerC, rot.dinnerC.n === "Macarrones proteicos" ? 70 : 260);
+        addFood(items, "21:00", rot.veg, rot.veg.g);
+        addFood(items, "21:00", rot.fat, 20);
+        addFood(items, "22:30", rot.nightP, 200);
+        addFood(items, "22:30", rot.nightC, 100);
+      } else {
+        addFood(items, "14:00", rot.lunchP, 160);
+        addFood(items, "14:00", rot.lunchC, rot.lunchC.n === "Tortitas arroz" ? 20 : 50);
+        addFood(items, "21:00", rot.dinnerP1, 230);
+        addFood(items, "21:00", rot.dinnerP2, 170);
+        addFood(items, "21:00", rot.dinnerC, rot.dinnerC.n === "Macarrones proteicos" ? 40 : 160);
+        addFood(items, "21:00", rot.veg, rot.veg.g);
+        addFood(items, "21:00", rot.fat, 20);
+        addFood(items, "22:30", rot.nightP, 180);
+      }
 
+      for (let i = 0; i < 36; i++){
+        let totals = sumItems(items);
+        let pDiff = targets.p - totals.p;
+        let cDiff = targets.c - totals.c;
+        let fDiff = targets.f - totals.f;
+        let changed = false;
+
+        if (pDiff > 5){
+          addFood(items, strategy.name === "Ayuno 24h" ? "20:30" : "21:00", rot.dinnerP1, 10);
+          if (sumItems(items).p < targets.p - 5){
+            addFood(items, strategy.name === "Ayuno 24h" ? "20:30" : "22:30", rot.nightP, 25);
+          }
+          changed = true;
+        } else if (pDiff < -10){
+          const pItems = items.filter(it => it.food.p >= 10).sort((a,b) => b.g - a.g);
+          if (pItems.length){
+            pItems[0].g = Math.max(pItems[0].food.min || 0, pItems[0].g - (pItems[0].food.step || 10));
+            changed = true;
+          }
+        }
+
+        totals = sumItems(items);
+        cDiff = targets.c - totals.c;
+        if (cDiff > 8){
+          addFood(items, strategy.name === "Ayuno 24h" ? "20:30" : "21:00", rot.dinnerC, rot.dinnerC.step);
+          if (strategy.name !== "Ayuno 24h" && strategy.name !== "Ayuno 16h" && sumItems(items).c < targets.c - 8){
+            addFood(items, "22:30", rot.nightC, rot.nightC.step);
+          }
+          changed = true;
+        } else if (cDiff < -15){
+          const cItems = items.filter(it => it.food.c >= 8).sort((a,b) => b.g - a.g);
+          if (cItems.length){
+            cItems[0].g = Math.max(cItems[0].food.min || 0, cItems[0].g - (cItems[0].food.step || 10));
+            changed = true;
+          }
+        }
+
+        totals = sumItems(items);
+        fDiff = targets.f - totals.f;
+        if (fDiff > 4){
+          addFood(items, strategy.name === "Ayuno 24h" ? "20:30" : "21:00", rot.fat, rot.fat.step);
+          changed = true;
+        } else if (fDiff < -8){
+          const fItems = items.filter(it => it.food.f >= 10).sort((a,b) => b.g - a.g);
+          if (fItems.length){
+            fItems[0].g = Math.max(fItems[0].food.min || 0, fItems[0].g - (fItems[0].food.step || 5));
+            changed = true;
+          }
+        }
+
+        items.forEach(it => {
+          if (it.food.max && it.g > it.food.max) it.g = it.food.max;
+          if (it.food.min && it.g < it.food.min) it.g = it.food.min;
+        });
+
+        if (!changed) break;
+      }
+
+      return items.filter(it => it.g > 0);
+    }
+
+    function validatePlan(items, targets, strategy){
+      const totals = sumItems(items);
+      const pDiff = totals.p - targets.p;
+      const cDiff = totals.c - targets.c;
+      const fDiff = totals.f - targets.f;
+      const problems = [];
+
+      items.forEach(it => {
+        if (it.food.n === "Frutos rojos" && it.g > 120) problems.push("Frutos rojos demasiado altos.");
+        if (it.food.n === "Queso fresco batido 0%" && it.g > 300) problems.push("Queso batido demasiado alto.");
+        if (it.food.n === "Patata cocida" && it.g > 300) problems.push("Patata demasiado alta.");
+      });
+
+      const times = [...new Set(items.map(x => x.time))];
+      if (strategy.name === "Ayuno 24h" && times.length !== 1){
+        problems.push("Un ayuno 24h debe tener una sola ventana.");
+      }
+      if (strategy.name === "Ayuno 16h" && times.length !== 2){
+        problems.push("Un ayuno 16h debe tener 2 comidas.");
+      }
+      if (Math.abs(pDiff) > 18) problems.push("Proteína todavía lejos.");
+      if (Math.abs(cDiff) > 25) problems.push("Hidratos todavía lejos.");
+      if (Math.abs(fDiff) > 12) problems.push("Grasas todavía lejos.");
+
+      return { totals, pDiff, cDiff, fDiff, ok: problems.length === 0, problems };
+    }
+
+    function renderStrategy(strategy, weeklyLoss, weight){
+      const weeks = Math.max(1, Math.ceil((weight - 85) / 0.7));
+      const targetDate = new Date();
+      targetDate.setDate(targetDate.getDate() + weeks * 7);
+
+      $("strategyBox").innerHTML = `
+        <span class="badge">${strategy.name}</span>
+        <span class="badge">${strategy.meals.join(" · ")}</span>
+        <span class="badge">Six-pack aprox: ${targetDate.toLocaleDateString("es-ES")}</span>
+        <div class="note">
+          ${strategy.why}
+          ${weeklyLoss === null ? "" : " Pérdida semanal estimada: " + fmt(weeklyLoss) + " kg."}
+        </div>
+      `;
+    }
+
+    function renderMenu(items, result){
+      let html = "";
+      let current = "";
+
+      items.forEach(it => {
+        if (it.time !== current){
+          if (current !== "") html += "</div>";
+          html += `<div class="meal"><h4>${it.time}</h4>`;
+          current = it.time;
+        }
+
+        const m = foodMacros(it.food, it.g);
+        html += `
+          <div class="food">
+            <div>
+              <b>${it.food.n}</b>
+              <div class="small">${it.g} g</div>
+            </div>
+            <div class="small">P ${fmt(m.p)} · C ${fmt(m.c)} · G ${fmt(m.f)}</div>
+          </div>
+        `;
+      });
+
+      if (current !== "") html += "</div>";
+
+      html += `
+        <div class="summary">
+          <b>Total real del menú</b><br>
+          Proteína: ${fmt(result.totals.p)} g<br>
+          Hidratos: ${fmt(result.totals.c)} g<br>
+          Grasas: ${fmt(result.totals.f)} g<br><br>
+
+          <b>Diferencia respecto al objetivo</b><br>
+          <span class="${diffClass(result.pDiff)}">P: ${fmt(result.pDiff)}</span> ·
+          <span class="${diffClass(result.cDiff)}">C: ${fmt(result.cDiff)}</span> ·
+          <span class="${diffClass(result.fDiff)}">G: ${fmt(result.fDiff)}</span>
+          ${result.ok ? "" : "<br><br><span class='bad'>" + result.problems.join(" ") + "</span>"}
+        </div>
+      `;
+
+      $("menuBox").innerHTML = html;
+    }
+
+    function exportTxt(){
+      if (!lastPlan){
+        alert("Primero genera un plan.");
+        return;
+      }
+
+      let txt = "Gran Canaria Coach Elite\n";
+      txt += "Fecha: " + lastPlan.fecha + "\n";
+      txt += "Estrategia: " + lastPlan.strategy + "\n";
+      txt += "Macros objetivo: P " + lastPlan.targets.p + " / C " + lastPlan.targets.c + " / G " + lastPlan.targets.f + "\n";
+      txt += "Macros reales: P " + lastPlan.real.p + " / C " + lastPlan.real.c + " / G " + lastPlan.real.f + "\n\n";
+
+      lastPlan.items.forEach(it => {
+        txt += it.time + " - " + it.name + " " + it.g + " g\n";
+      });
+
+      const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "gran_canaria_coach_elite.txt";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function generatePlan(){
+      try{
+        const peso = num($("peso").value);
+        const grasa = num($("grasa").value);
+        const musculo = num($("musculo").value);
+        const cintura = num($("cintura").value);
+        const gym = $("gym").value;
+        const anti = $("anti").value;
+        const social = $("social").value;
+
+        if (isNaN(peso) || isNaN(grasa) || isNaN(cintura)){
+          $("warning").innerText = "Introduce peso, % grasa y cintura.";
+          return;
+        }
+
+        weights.push(peso);
+        localStorage.setItem("gc_elite_weights", JSON.stringify(weights));
+
+        logs.push({
+          fecha: new Date().toLocaleDateString("es-ES"),
+          peso,
+          grasa,
+          cintura,
+          musculo: isNaN(musculo) ? "" : musculo
+        });
+        localStorage.setItem("gc_elite_logs", JSON.stringify(logs));
+
+        const weeklyLoss = getWeeklyLoss(peso);
+        const strategy = chooseStrategy(grasa, cintura, gym, weeklyLoss, social);
+        const target = getTargets(peso, gym, strategy);
+        const rotation = getRotation(logs.length);
+        const items = buildPlan(target, strategy, rotation);
+        const result = validatePlan(items, target, strategy);
+
+        $("kpiP").innerText = target.p + " g";
+        $("kpiC").innerText = target.c + " g";
+        $("kpiG").innerText = target.f + " g";
+
+        setRing(result.totals.p, result.totals.c, result.totals.f);
+        renderStrategy(strategy, weeklyLoss, peso);
+        renderMenu(items, result);
+        buildChecks(peso * 0.035 + (gym === "si" ? 0.7 : 0));
+        buildHistory();
+
+        $("warning").innerText = result.ok ? "" : "Plan generado, pero la validación final detecta que no ha quedado fino del todo. Mira el resumen.";
+
+        lastPlan = {
+          fecha: new Date().toLocaleDateString("es-ES"),
+          strategy: strategy.name,
+          targets: target,
+          real: {
+            p: fmt(result.totals.p),
+            c: fmt(result.totals.c),
+            f: fmt(result.totals.f)
+          },
+          items: items.map(it => ({
+            time: it.time,
+            name: it.food.n,
+            g: it.g
+          }))
+        };
+        localStorage.setItem("gc_elite_plan", JSON.stringify(lastPlan));
+      }catch(err){
+        $("warning").innerText = "Error al generar: " + err.message;
+        console.error(err);
+      }
+    }
+
+    $("btnGenerar").addEventListener("click", generatePlan);
+    $("btnExportar").addEventListener("click", exportTxt);
+
+    setToday();
+    buildHistory();
+  </script>
 </body>
 </html>
