@@ -1,11 +1,11 @@
 {
-  "name": "Gran Canaria V12 Pro Strict",
-  "short_name": "GC V12",
+  "name": "Gran Canaria V12.2 Stable",
+  "short_name": "GC V12.2",
   "display": "standalone",
   "start_url": "./index.html",
   "background_color": "#07111f",
   "theme_color": "#22c55e",
-  "description": "Coach con solver estricto y proteína obligatoria.",
+  "description": "Versión estable y funcional con ajuste estricto.",
   "icons": [
     {
       "src": "icon-192.png",
