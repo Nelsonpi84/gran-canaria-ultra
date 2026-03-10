@@ -6,81 +6,61 @@
 <title>Gran Canaria Ultra Coach</title>
 
 <style>
-
 body{
 font-family:Arial;
 background:#08111f;
 color:white;
-margin:0;
 padding:20px;
-}
-
-.container{
-max-width:500px;
-margin:auto;
 }
 
 .card{
 background:#101c35;
 padding:20px;
-border-radius:14px;
+border-radius:15px;
 margin-bottom:20px;
 }
 
-h1{
-text-align:center;
+button{
+background:#22c55e;
+border:none;
+padding:15px;
+border-radius:10px;
+font-size:18px;
+width:100%;
 }
 
 input,select{
 width:100%;
-padding:12px;
-margin-top:6px;
-margin-bottom:12px;
+padding:10px;
+margin-bottom:10px;
 border-radius:8px;
 border:none;
 }
-
-button{
-width:100%;
-padding:14px;
-background:#22c55e;
-border:none;
-border-radius:10px;
-font-size:18px;
-font-weight:bold;
-}
-
-.metric{
-margin-bottom:10px;
-}
-
 </style>
 
 </head>
 
 <body>
 
-<div class="container">
-
-<h1>Gran Canaria Ultra Coach</h1>
+<h1>Gran Canaria Ultra Coach V21</h1>
 
 <div class="card">
 
 <h3>Datos de la mañana</h3>
 
-<label>Peso (kg)</label>
-<input id="peso">
+Peso
+<input id="peso" value="94.2">
 
-<label>% grasa</label>
-<input id="grasa">
+% grasa
+<input id="grasa" value="22.4">
 
-<label>% músculo</label>
-<input id="musculo">
+% músculo
+<input id="musculo" value="50">
 
-<label>Cintura (cm)</label>
-<input id="cintura">
+Cintura
+<input id="cintura" value="100">
 
-<label>¿Hoy toca gimnasio?</label>
+¿Gym hoy?
 <select id="gym">
 <option>No</option>
 <option>Si</option>
@@ -92,24 +72,13 @@ margin-bottom:10px;
 
 <div class="card">
 
-<h3>Macros objetivo</h3>
+<h3>Resultados</h3>
 
-<div class="metric">Proteína: <span id="prot"></span> g</div>
-<div class="metric">Hidratos: <span id="carb"></span> g</div>
-<div class="metric">Grasas: <span id="fat"></span> g</div>
-
-</div>
-
-<div class="card">
-
-<h3>Predicción corporal</h3>
-
-<div class="metric">Masa magra: <span id="lean"></span> kg</div>
-<div class="metric">Peso objetivo 12%: <span id="goal12"></span> kg</div>
-<div class="metric">Peso objetivo 10% (six-pack): <span id="goal10"></span> kg</div>
-<div class="metric">Semanas estimadas: <span id="weeks"></span></div>
-
-</div>
+<div id="prot"></div>
+<div id="carb"></div>
+<div id="fat"></div>
+<div id="lean"></div>
+<div id="goal"></div>
 
 </div>
 
@@ -119,37 +88,24 @@ function calcular(){
 
 let peso=parseFloat(document.getElementById("peso").value)
 let grasa=parseFloat(document.getElementById("grasa").value)
-let gym=document.getElementById("gym").value
 
-let proteina
-let grasas
-let hidratos
-
-if(gym=="Si"){
-proteina=peso*2.3
-grasas=peso*0.6
-hidratos=100
-}else{
-proteina=peso*2.4
-grasas=peso*0.65
-hidratos=55
-}
-
-document.getElementById("prot").innerText=Math.round(proteina)
-document.getElementById("carb").innerText=Math.round(hidratos)
-document.getElementById("fat").innerText=Math.round(grasas)
+let proteina=Math.round(peso*2.4)
+let grasas=Math.round(peso*0.65)
+let hidratos=55
 
 let masaMagra=peso*(1-grasa/100)
 
-let objetivo12=masaMagra/0.88
-let objetivo10=masaMagra/0.90
+let objetivo=masaMagra/0.88
 
-let semanas=(peso-objetivo10)/0.75
+document.getElementById("prot").innerHTML="Proteína objetivo: "+proteina+" g"
 
-document.getElementById("lean").innerText=masaMagra.toFixed(1)
-document.getElementById("goal12").innerText=objetivo12.toFixed(1)
-document.getElementById("goal10").innerText=objetivo10.toFixed(1)
-document.getElementById("weeks").innerText=semanas.toFixed(1)+" semanas"
+document.getElementById("carb").innerHTML="Hidratos objetivo: "+hidratos+" g"
+
+document.getElementById("fat").innerHTML="Grasas objetivo: "+grasas+" g"
+
+document.getElementById("lean").innerHTML="Masa magra: "+masaMagra.toFixed(1)+" kg"
+
+document.getElementById("goal").innerHTML="Peso six-pack aprox: "+objetivo.toFixed(1)+" kg"
 
 }
 
