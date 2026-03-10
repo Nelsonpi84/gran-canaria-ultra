@@ -1,1 +1,87 @@
+<!DOCTYPE html><html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gran Canaria Coach</title><style>
+body{
+font-family:Arial;
+background:#0b132b;
+color:white;
+padding:20px;
+}
 
+.card{
+background:#1c2541;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+button{
+margin-top:20px;
+padding:12px;
+background:#00c853;
+border:none;
+border-radius:8px;
+font-weight:bold;
+width:100%;
+}
+
+.result{
+margin-top:20px;
+background:#3a506b;
+padding:15px;
+border-radius:8px;
+}
+</style></head><body><h2>Gran Canaria Coach</h2><div class="card">Peso (kg)
+<input id="peso">
+
+% grasa
+<input id="grasa">
+
+Cintura (cm)
+<input id="cintura">
+
+<button onclick="calcular()">Generar plan</button>
+
+</div><div class="card result" id="resultado">
+Esperando datos...
+</div><script>
+
+function calcular(){
+
+let peso=parseFloat(document.getElementById("peso").value)
+let grasa=parseFloat(document.getElementById("grasa").value)
+
+let prote= Math.round(peso*2.3)
+let grasaMacro=Math.round(peso*0.7)
+let hidratos=Math.round(peso*1)
+
+let estrategia="Definición"
+
+if(grasa>20) estrategia="Ayuno 24h"
+if(grasa<15) estrategia="Refeed estratégico"
+
+document.getElementById("resultado").innerHTML=
+
+`
+<b>Estrategia:</b> ${estrategia}<br><br>
+
+<b>Macros objetivo</b><br>
+Proteína: ${prote} g<br>
+Hidratos: ${hidratos} g<br>
+Grasas: ${grasaMacro} g<br>
+`
+
+}
+
+</script></body>
+</html>
