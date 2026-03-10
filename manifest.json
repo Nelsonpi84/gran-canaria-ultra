@@ -1,11 +1,11 @@
 {
-  "name": "Gran Canaria Ultra Coach",
-  "short_name": "GC Ultra",
+  "name": "Gran Canaria V11 Solver Protein",
+  "short_name": "GC V11",
   "display": "standalone",
   "start_url": "./index.html",
-  "background_color": "#08101f",
+  "background_color": "#07111f",
   "theme_color": "#22c55e",
-  "description": "Coach automático de definición con estrategia diaria, macros exactos, timing de hidratos, equivalencias y alimentos personalizados.",
+  "description": "Coach con solver más estricto priorizando proteína.",
   "icons": [
     {
       "src": "icon-192.png",
